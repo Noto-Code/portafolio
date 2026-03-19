@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noto — Las notas de Noto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ── TOKENS ──────────────────────────────────────── */
+    :root {
+      /* azul lavanda — color dominante extraído del fondo de la nutria */
+      --bg:         #2596be;   /* lavanda media — sección principal */
+      --bg-dark:    #344168;   /* lavanda oscuro */
+      --bg-deep:    #6858a0;   /* lavanda profundo */
+      --bg-light:   #ddd8f0;   /* lavanda claro */
+      --bg-pale:    #eeeaf8;   /* lavanda muy pálido */
+
+      /* café — color de la nutria */
+      --brown:      #7a4a28;
+      --brown-mid:  #a0663a;
+      --brown-warm: #c8906a;
+      --brown-pale: #f0e0d0;
+      --brown-bg:   #e8d0b8;   /* fondo secciones café */
+
+      /* texto */
+      --ink:        #1e1828;
+      --ink2:       #3a3050;
+      --ink3:       #6858a0;
+      --ink-on-lav: #2a2040;
+      --ink-on-brown: #3a2010;
+
+      /* líneas */
+      --line:       rgba(255,255,255,0.25);
+      --line-dark:  rgba(104,88,160,0.3);
+
+      --font-pixel: 'Press Start 2P', monospace;
+      --font-main:  'DM Sans', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+    }
+
+    /* ── RESET ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink-on-lav);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── DOT TEXTURE ─────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--bg-dark);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .logo-name {
+      font-family: var(--font-pixel);
+      font-size: 10px;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .logo-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+    }
+    .nav-menu {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-menu a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-menu a:hover { color: #fff; }
+
+    /* ── WRAP ────────────────────────────────────────── */
+    .wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative; z-index: 1;
+    }
+
+    /* ══════════════════════════════════════════════════
+       HERO — fondo azul lavanda
+    ══════════════════════════════════════════════════ */
+    #hero {
+      background: var(--bg);
+      min-height: 100vh;
+      padding-top: 56px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .hero-layout {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: center;
+      padding: 56px 0;
+    }
+
+    /* left */
+    .hero-kicker {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-kicker::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--brown-warm);
+      flex-shrink: 0;
+    }
+
+    .hero-h1 {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: clamp(44px, 6.5vw, 76px);
+      line-height: 1.08;
+      color: #fff;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+    .hero-h1 strong {
+      font-weight: 500;
+      color: var(--brown-pale);
+    }
+
+    .hero-mono {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 28px;
+    }
+
+    .hero-desc {
+      font-family: var(--font-main);
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .btn-fill {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      padding: 13px 20px;
+      background: var(--brown);
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 1px;
+      box-shadow: 3px 3px 0 0 var(--brown-mid);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-fill:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 0 var(--brown-mid);
+    }
+    .btn-outline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-outline:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* right */
+    .hero-mascot {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .mascot-img {
+      width: 340px; height: 340px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      position: relative; z-index: 1;
+      border: 3px solid rgba(255,255,255,0.2);
+    }
+    /* pixel corner brackets */
+    .mascot-frame {
+      position: relative;
+    }
+    .mascot-frame::before,
+    .mascot-frame::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: rgba(255,255,255,0.35);
+      border-style: solid;
+      z-index: 2;
+    }
+    .mascot-frame::before { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
+    .mascot-frame::after  { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
+
+    /* ══════════════════════════════════════════════════
+       SOBRE — fondo café
+    ══════════════════════════════════════════════════ */
+    #sobre {
+      background: var(--brown-bg);
+      border-top: 1px solid rgba(122,74,40,0.2);
+      padding: 80px 0;
+      position: relative; z-index: 1;
+    }
+    /* dot texture sobre */
+    #sobre::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(122,74,40,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .sobre-grid {
+      display: grid;
+      
+      gap: 56px; 
+      align-items: start;
+      position: relative; z-index: 1;
+    }
+
+    /* card */
+    .pcard {
+      background: #fff;
+      border: 1px solid rgba(122,74,40,0.2);
+      padding: 24px;
+    }
+    .pcard-avatar {
+      width: 60px; height: 60px;
+      overflow: hidden;
+      border: 2px solid rgba(122,74,40,0.2);
+      margin-bottom: 14px;
+    }
+    .pcard-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      image-rendering: pixelated;
+    }
+    .pcard-name {
+      font-family: var(--font-pixel);
+      font-size: 9px;
+      color: var(--brown);
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+    .pcard-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--brown-mid);
+      margin-bottom: 18px;
+    }
+    .pills { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pill {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 3px 9px;
+      border: 1px solid;
+    }
+    .p-brown { background: var(--brown-pale); color: var(--brown); border-color: var(--brown-warm); }
+    .p-lav   { background: var(--bg-pale);    color: var(--bg-deep); border-color: var(--bg-dark); }
+    .p-muted { background: #f4f0ec;           color: #888; border-color: #ddd; }
+
+    /* texto */
+    .sobre-text {
+      color: var(--ink-on-brown);
+    }
+    .s-kicker {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: var(--brown-mid);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .s-title {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: clamp(26px, 3vw, 36px);
+      color: var(--brown);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .s-title strong { font-weight: 500; }
+    .sobre-body {
+      font-family: var(--font-main);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-on-brown);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .sobre-body b { font-weight: 500; color: var(--brown); }
+
+    .quote {
+      margin-top: 28px;
+      padding: 16px 20px;
+      border-left: 3px solid var(--brown-warm);
+      background: rgba(122,74,40,0.06);
+    }
+    .quote p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-style: italic;
+      color: var(--brown-mid);
+      line-height: 1.65;
+    }
+
+    /* ══════════════════════════════════════════════════
+       CONTENIDO — fondo azul lavanda oscuro
+    ══════════════════════════════════════════════════ */
+    #contenido {
+      background: var(--bg-dark);
+      border-top: 1px solid var(--line);
+      padding: 80px 0;
+      position: relative; z-index: 1;
+    }
+    #contenido::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .c-kicker {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      position: relative; z-index: 1;
+    }
+    .c-title {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: clamp(26px, 3vw, 36px);
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 36px;
+      position: relative; z-index: 1;
+    }
+    .c-title strong { font-weight: 500; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      position: relative; z-index: 1;
+    }
+    .vcard {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+      transition: background 0.2s, transform 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .vcard:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-3px);
+    }
+    .vcard-thumb {
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .th-1 { background: rgba(200,144,106,0.35); }
+    .th-2 { background: rgba(122,74,40,0.35);   }
+    .th-3 { background: rgba(155,74,90,0.25);   }
+
+    .px-play {
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 12px 0 12px 20px;
+      border-color: transparent transparent transparent rgba(255,255,255,0.5);
+    }
+    .vcard-badge {
+      position: absolute;
+      bottom: 8px; left: 8px;
+      font-family: var(--font-pixel);
+      font-size: 6px;
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.35);
+      color: rgba(255,255,255,0.8);
+    }
+    .vcard-body { padding: 14px 16px 16px; }
+    .vcard-title {
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+    .vcard-desc {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    .wip-row {
+      margin-top: 24px;
+      padding: 16px 20px;
+      border: 1px dashed rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative; z-index: 1;
+    }
+    .wip-badge {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .wip-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════════════════════
+       CTA — fondo azul profundo
+    ══════════════════════════════════════════════════ */
+    #yt {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--line);
+      padding: 80px 0;
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+    #yt::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .yt-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .yt-kicker {
+      font-family: var(--font-pixel);
+      font-size: 7px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .yt-title {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: clamp(28px, 3.5vw, 42px);
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .yt-title strong {
+      font-weight: 500;
+      color: var(--brown-pale);
+    }
+    .yt-body {
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--bg-deep);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 22px 0;
+      position: relative; z-index: 1;
+    }
+    .footer-row {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-brand {
+      font-family: var(--font-pixel);
+      font-size: 8px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 1px;
+    }
+    .footer-brand span { color: rgba(255,255,255,0.6); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-note {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── REVEAL (solo fade, sin movimiento exagerado) ─── */
+    .reveal {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .reveal.up { opacity: 1; }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 800px) {
+      .hero-layout { grid-template-columns: 1fr; gap: 36px; padding: 40px 0; }
+      .hero-mascot { order: -1; }
+      .mascot-img { width: 240px; height: 240px; }
+      .sobre-grid { grid-template-columns: gap: 32px; }
+      .cards { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <a class="logo" href="#">
+      <span class="logo-name">NOTO</span>
+      <span class="logo-sub">// las notas de noto</span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#sobre">sobre</a></li>
+      <li><a href="#contenido">contenido</a></li>
+      <li><a href="https://www.youtube.com/@NotoCode">youtube</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-layout">
+
+      <div>
+        
+        <h1 class="hero-h1">
+          Las notas<br>de <strong>Noto</strong>
+        </h1>
+        <span class="hero-mono">// desarrollo de software documentado</span>
+        <p class="hero-desc">
+          Proyectos reales, conceptos prácticos y el proceso completo —
+          errores incluidos.
+        </p>
+        <div class="hero-actions">
+          <a href="https://www.youtube.com/@NotoCode" target="_blank" class="btn-fill">
+            ▶&nbsp;ver canal
+          </a>
+          <a href="#sobre" class="btn-outline">Quién es Noto →</a>
+        </div>
+      </div>
+
+      <div class="hero-mascot">
+        <div class="mascot-frame">
+          <img
+            class="mascot-img"
+            src="YT.png"
+            alt="Noto"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SOBRE ══════ -->
+<section id="sobre">
+  <div class="wrap">
+    <div class="sobre-grid">
+
+      
+
+      <div class="reveal" style="transition-delay:.1s">
+        
+        <h2 class="s-title">Sobre <strong>Noto</strong></h2>
+        <p class="sobre-body">
+          Estudiante de software de día, nutria programadora de noche. 
+          Noto es mi identidad para documentar el proceso. 
+          Aquí comparto esa parte del desarrollo: <b>el caos, los errores y la satisfacción de ver algo funcionar después de fallar mil veces</b>.
+
+        </p>
+        <p class="sobre-body">
+          La idea es simple: si puedo entenderlo construyéndolo,
+          tú también puedes <b>construir tu propia versión</b>.
+        </p>
+        
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTENIDO ══════ -->
+<section id="contenido">
+  <div class="wrap">
+    <p class="c-kicker">contenido</p>
+    <h2 class="c-title">Notas <strong>recientes</strong></h2>
+
+    <div class="cards">
+
+    <!--
+      <div class="vcard reveal" style="transition-delay:.06s">
+        <div class="vcard-thumb th-2">
+          <div class="px-play"></div>
+          <span class="vcard-badge">proyecto</span>
+        </div>
+        <div class="vcard-body">
+          <p class="vcard-title">Construyo una API REST en vivo — errores incluidos</p>
+          <p class="vcard-desc">Documentar significa mostrar también lo que no funciona a la primera.</p>
+        </div>
+      </div>
+    -->
+
+
+    </div>
+
+    <div class="wip-row">
+      <span class="wip-badge">// WIP</span>
+      <p class="wip-text">
+        El canal está en construcción. Suscríbete para no perderte las primeras notas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CTA ══════ -->
+<section id="yt">
+  <div class="wrap">
+    <div class="yt-inner reveal">
+      <p class="yt-kicker">// youtube</p>
+      <h2 class="yt-title">Únete a la <strong>comunidad</strong></h2>
+      <p class="yt-body">
+        Sal de cada video con ganas de construir algo propio.
+      </p>
+      <a href="https://www.youtube.com/@NotoCode" target="_blank" class="btn-fill">
+        ▶&nbsp;ir al canal
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-row">
+    <p class="footer-brand"><span>NOTO</span> // las notas de noto</p>
+    <ul class="footer-links">
+      <li><a href="#sobre">sobre</a></li>
+      <li><a href="#contenido">contenido</a></li>
+      <li><a href="https://youtube.com/@NotoCode" target="_blank">youtube</a></li>
+    </ul>
+    
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('up'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
